@@ -19,9 +19,19 @@ namespace CrudApp.Controllers
         }
 
         // GET: Models
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchText = "")
         {
-            return View(await _context.Models.ToListAsync());
+            var result = await _context.Models.ToListAsync();
+
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                result = result.Where(x => 
+                    x.Name.ToLower().Contains(SearchText.ToLower()) ||
+                    x.Description.ToLower().Contains(SearchText.ToLower())
+                    ).ToList();
+            }
+
+            return View(result);
         }
 
         public IActionResult AddOrEdit(int id = 0)

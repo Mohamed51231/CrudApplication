@@ -4,7 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Models" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Search Key"/>
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit" value="Search"/>
+        </span>
+    </form>
+</div>
+<br />
 <table class="table table-hover">
     <thead>
         <tr>
