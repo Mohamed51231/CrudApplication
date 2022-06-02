@@ -27,7 +27,8 @@ namespace CrudApp.Controllers
             {
                 result = result.Where(x => 
                     x.Name.ToLower().Contains(SearchText.ToLower()) ||
-                    x.Description.ToLower().Contains(SearchText.ToLower())
+                    //x.Name.ToLower().Contains(SearchText.ToLower()) ||
+                    x.FirstName.ToLower().Contains(SearchText.ToLower())
                     ).ToList();
             }
 
@@ -52,7 +53,7 @@ namespace CrudApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit([Bind("Id,Name,Description")] Model model)
+        public async Task<IActionResult> AddOrEdit([Bind("Id,Name,FirstName")] Model model)
         {
             if (ModelState.IsValid)
             {

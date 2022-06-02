@@ -13,8 +13,8 @@ namespace CrudApp.Models
         [Display(Name ="Nom")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "La description est obligatoire")]
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        [Required(ErrorMessage = "Le prénom est obligatoire")]
+        [Display(Name = "Prénom")]
+        public string FirstName { get; set; }
     }
 }
