@@ -11,9 +11,9 @@ namespace CrudApp.Controllers
 {
     public class ModelsController : Controller
     {
-        private readonly Models.AppContext _context;
+        private readonly ApplicationContext _context;
 
-        public ModelsController(Models.AppContext context)
+        public ModelsController(ApplicationContext context)
         {
             _context = context;
         }
