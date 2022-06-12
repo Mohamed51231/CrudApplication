@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CrudApp.Models.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrudApp.Models
 {
@@ -6,6 +7,12 @@ namespace CrudApp.Models
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new HistoryActionConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
 
         public DbSet<Model> Models { get; set; }

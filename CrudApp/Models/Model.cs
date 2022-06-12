@@ -16,5 +16,9 @@ namespace CrudApp.Models
         [Required(ErrorMessage = "Le prénom est obligatoire")]
         [Display(Name = "Prénom")]
         public string FirstName { get; set; }
+
+        public bool IsEdited { get; set; }
+        
+        public bool IsDeleted { get; set; }
     }
 }

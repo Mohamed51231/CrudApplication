@@ -21,7 +21,7 @@ namespace CrudApp.Controllers
         // GET: Models
         public async Task<IActionResult> Index(string SearchText = "")
         {
-            var result = await _context.Models.ToListAsync();
+            var result = await _context.Models.Where(m => !m.IsDeleted && !m.IsEdited).ToListAsync();
 
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -87,7 +87,8 @@ namespace CrudApp.Controllers
                 return NotFound();
             }
 
-            _context.Models.Remove(model);
+            model.IsDeleted = true;
+            _context.Models.Update(model);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
