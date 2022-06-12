@@ -60,10 +60,49 @@ namespace CrudApp.Controllers
                 if (model.Id == 0)
                 {
                     _context.Add(model);
+                    var histo = new History
+                    {
+                        Id = 0,
+                        ActionId = 1,
+                        UserId = 1,
+                        NewEntity = model,
+                        ActionDate = DateTime.Now,
+                    };
+                    _context.Histories.Add(histo);
                 }
                 else
                 {
-                    _context.Update(model);
+                    var oldModel = await _context.Models
+                        .FirstOrDefaultAsync(m => m.Id == model.Id);
+                    if (oldModel == null)
+                    {
+                        return NotFound();
+                    }
+
+                    oldModel.IsEdited = true;
+                    _context.Update(oldModel);
+
+                    var newModel = new Model
+                    {
+                        Id = 0,
+                        FirstName = model.FirstName,
+                        Name = model.Name,
+                         IsDeleted = false,
+                         IsEdited = false,
+                    };
+
+                    _context.Add(newModel);
+
+                    var histo = new History
+                    {
+                        Id = 0,
+                        ActionId = 2,
+                        UserId = 1,
+                        OldEntity = oldModel,
+                        NewEntity = newModel,
+                        ActionDate = DateTime.Now,
+                    };
+                    _context.Histories.Add(histo);
                 }
 
                 await _context.SaveChangesAsync();
@@ -89,6 +128,15 @@ namespace CrudApp.Controllers
 
             model.IsDeleted = true;
             _context.Models.Update(model);
+            var histo = new History
+            {
+                Id = 0,
+                ActionId = 3,
+                UserId = 1,
+                OldEntityId = model.Id,
+                ActionDate = DateTime.Now,
+            };
+            _context.Histories.Add(histo);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
